@@ -4,21 +4,18 @@ console.log("Ming AI Food script loaded");
 DARK MODE
 ========================= */
 
-const themeToggle =
-document.getElementById("themeToggle");
+const themeToggle = document.getElementById(
+"themeToggle"
+);
 
-const savedTheme =
-localStorage.getItem("theme");
-
-if (savedTheme === "dark") {
+if (localStorage.getItem("theme") === "dark") {
 
 ```
 document.body.classList.add(
     "dark-mode"
 );
 
-themeToggle.textContent =
-    "☾";
+themeToggle.textContent = "☾";
 ```
 
 }
@@ -41,9 +38,7 @@ function () {
 
     if (isDarkMode) {
 
-        themeToggle.textContent =
-            "☾";
-
+        themeToggle.textContent = "☾";
 
         localStorage.setItem(
             "theme",
@@ -52,9 +47,7 @@ function () {
 
     } else {
 
-        themeToggle.textContent =
-            "☼";
-
+        themeToggle.textContent = "☼";
 
         localStorage.setItem(
             "theme",
@@ -69,7 +62,7 @@ function () {
 );
 
 /* =========================
-AI FOOD DEMO
+GET FOOD DEMO ELEMENTS
 ========================= */
 
 const openFoodDemo =
@@ -85,6 +78,11 @@ document.getElementById(
 const foodModal =
 document.getElementById(
 "foodModal"
+);
+
+const foodModalOverlay =
+document.querySelector(
+".food-modal-overlay"
 );
 
 const foodInput =
@@ -118,7 +116,7 @@ document.getElementById(
 );
 
 /* =========================
-OPEN MODAL
+OPEN DEMO POPUP
 ========================= */
 
 openFoodDemo.addEventListener(
@@ -136,7 +134,7 @@ function () {
 );
 
 /* =========================
-CLOSE MODAL
+CLOSE DEMO POPUP
 ========================= */
 
 closeFoodDemo.addEventListener(
@@ -154,15 +152,10 @@ function () {
 );
 
 /* =========================
-CLICK OUTSIDE MODAL
+CLICK OUTSIDE TO CLOSE
 ========================= */
 
-const modalOverlay =
-document.querySelector(
-".food-modal-overlay"
-);
-
-modalOverlay.addEventListener(
+foodModalOverlay.addEventListener(
 "click",
 function () {
 
@@ -177,7 +170,7 @@ function () {
 );
 
 /* =========================
-SUGGESTION BUTTONS
+FOOD SUGGESTIONS
 ========================= */
 
 const suggestionButtons =
@@ -194,7 +187,7 @@ function (button) {
         function () {
 
 
-            const text =
+            const suggestion =
                 button.textContent
                     .replace(
                         /[^\w\s]/gi,
@@ -205,7 +198,7 @@ function (button) {
 
             foodInput.value =
                 "I feel like eating " +
-                text.toLowerCase();
+                suggestion.toLowerCase();
 
         }
     );
@@ -228,7 +221,7 @@ function () {
         foodInput.value.trim();
 
 
-    if (!userInput) {
+    if (userInput === "") {
 
         foodInput.focus();
 
@@ -242,14 +235,14 @@ function () {
     }
 
 
-    /* HIDE OLD RESULT */
+    /* HIDE PREVIOUS RESULT */
 
     foodResult.classList.remove(
         "active"
     );
 
 
-    /* SHOW LOADING */
+    /* SHOW FAKE LOADING */
 
     foodLoading.classList.add(
         "active"
@@ -264,7 +257,7 @@ function () {
         "Ming AI is thinking...";
 
 
-    /* FAKE AI DELAY */
+    /* FAKE AI THINKING TIME */
 
     setTimeout(
         function () {
