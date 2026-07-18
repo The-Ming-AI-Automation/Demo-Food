@@ -1,297 +1,309 @@
 console.log("Ming AI Food script loaded");
 
-/* =========================
-DARK MODE
-========================= */
-
-const themeToggle = document.getElementById(
-"themeToggle"
-);
-
-if (localStorage.getItem("theme") === "dark") {
-
-```
-document.body.classList.add(
-    "dark-mode"
-);
-
-themeToggle.textContent = "☾";
-```
-
-}
-
-themeToggle.addEventListener(
-"click",
+document.addEventListener(
+"DOMContentLoaded",
 function () {
 
 ```
-    document.body.classList.toggle(
-        "dark-mode"
-    );
+    /* =========================
+       DARK MODE
+    ========================= */
 
 
-    const isDarkMode =
-        document.body.classList.contains(
+    const themeToggle =
+        document.getElementById(
+            "themeToggle"
+        );
+
+
+    const savedTheme =
+        localStorage.getItem(
+            "theme"
+        );
+
+
+    if (
+        savedTheme === "dark"
+    ) {
+
+        document.body.classList.add(
             "dark-mode"
         );
 
-
-    if (isDarkMode) {
-
-        themeToggle.textContent = "☾";
-
-        localStorage.setItem(
-            "theme",
-            "dark"
-        );
-
-    } else {
-
-        themeToggle.textContent = "☼";
-
-        localStorage.setItem(
-            "theme",
-            "light"
-        );
+        themeToggle.textContent =
+            "☾";
 
     }
 
-}
-```
 
-);
-
-/* =========================
-GET FOOD DEMO ELEMENTS
-========================= */
-
-const openFoodDemo =
-document.getElementById(
-"openFoodDemo"
-);
-
-const closeFoodDemo =
-document.getElementById(
-"closeFoodDemo"
-);
-
-const foodModal =
-document.getElementById(
-"foodModal"
-);
-
-const foodModalOverlay =
-document.querySelector(
-".food-modal-overlay"
-);
-
-const foodInput =
-document.getElementById(
-"foodInput"
-);
-
-const findFoodButton =
-document.getElementById(
-"findFoodButton"
-);
-
-const foodLoading =
-document.getElementById(
-"foodLoading"
-);
-
-const foodResult =
-document.getElementById(
-"foodResult"
-);
-
-const resultTitle =
-document.getElementById(
-"resultTitle"
-);
-
-const resultDescription =
-document.getElementById(
-"resultDescription"
-);
-
-/* =========================
-OPEN DEMO POPUP
-========================= */
-
-openFoodDemo.addEventListener(
-"click",
-function () {
-
-```
-    foodModal.classList.add(
-        "active"
-    );
-
-}
-```
-
-);
-
-/* =========================
-CLOSE DEMO POPUP
-========================= */
-
-closeFoodDemo.addEventListener(
-"click",
-function () {
-
-```
-    foodModal.classList.remove(
-        "active"
-    );
-
-}
-```
-
-);
-
-/* =========================
-CLICK OUTSIDE TO CLOSE
-========================= */
-
-foodModalOverlay.addEventListener(
-"click",
-function () {
-
-```
-    foodModal.classList.remove(
-        "active"
-    );
-
-}
-```
-
-);
-
-/* =========================
-FOOD SUGGESTIONS
-========================= */
-
-const suggestionButtons =
-document.querySelectorAll(
-".suggestion-button"
-);
-
-suggestionButtons.forEach(
-function (button) {
-
-```
-    button.addEventListener(
+    themeToggle.addEventListener(
         "click",
         function () {
 
-
-            const suggestion =
-                button.textContent
-                    .replace(
-                        /[^\w\s]/gi,
-                        ""
-                    )
-                    .trim();
+            document.body.classList.toggle(
+                "dark-mode"
+            );
 
 
-            foodInput.value =
-                "I feel like eating " +
-                suggestion.toLowerCase();
+            const isDarkMode =
+                document.body.classList.contains(
+                    "dark-mode"
+                );
+
+
+            if (
+                isDarkMode
+            ) {
+
+                themeToggle.textContent =
+                    "☾";
+
+
+                localStorage.setItem(
+                    "theme",
+                    "dark"
+                );
+
+            } else {
+
+                themeToggle.textContent =
+                    "☼";
+
+
+                localStorage.setItem(
+                    "theme",
+                    "light"
+                );
+
+            }
 
         }
     );
 
-}
-```
 
-);
-
-/* =========================
-FAKE AI RESPONSE
-========================= */
-
-findFoodButton.addEventListener(
-"click",
-function () {
-
-```
-    const userInput =
-        foodInput.value.trim();
+    /* =========================
+       GET MODAL ELEMENTS
+    ========================= */
 
 
-    if (userInput === "") {
-
-        foodInput.focus();
-
-
-        foodInput.placeholder =
-            "Tell Ming AI what you feel like eating first...";
+    const openFoodDemo =
+        document.getElementById(
+            "openFoodDemo"
+        );
 
 
-        return;
+    const closeFoodDemo =
+        document.getElementById(
+            "closeFoodDemo"
+        );
 
-    }
+
+    const foodModal =
+        document.getElementById(
+            "foodModal"
+        );
 
 
-    /* HIDE PREVIOUS RESULT */
+    const foodModalOverlay =
+        document.querySelector(
+            ".food-modal-overlay"
+        );
 
-    foodResult.classList.remove(
-        "active"
+
+    const foodInput =
+        document.getElementById(
+            "foodInput"
+        );
+
+
+    const findFoodButton =
+        document.getElementById(
+            "findFoodButton"
+        );
+
+
+    const foodLoading =
+        document.getElementById(
+            "foodLoading"
+        );
+
+
+    const foodResult =
+        document.getElementById(
+            "foodResult"
+        );
+
+
+    const resultTitle =
+        document.getElementById(
+            "resultTitle"
+        );
+
+
+    const resultDescription =
+        document.getElementById(
+            "resultDescription"
+        );
+
+
+    /* =========================
+       OPEN POPUP
+    ========================= */
+
+
+    openFoodDemo.onclick =
+        function () {
+
+            foodModal.classList.add(
+                "active"
+            );
+
+        };
+
+
+    /* =========================
+       CLOSE POPUP
+    ========================= */
+
+
+    closeFoodDemo.onclick =
+        function () {
+
+            foodModal.classList.remove(
+                "active"
+            );
+
+        };
+
+
+    /* =========================
+       CLICK OUTSIDE
+    ========================= */
+
+
+    foodModalOverlay.onclick =
+        function () {
+
+            foodModal.classList.remove(
+                "active"
+            );
+
+        };
+
+
+    /* =========================
+       SUGGESTION BUTTONS
+    ========================= */
+
+
+    const suggestionButtons =
+        document.querySelectorAll(
+            ".suggestion-button"
+        );
+
+
+    suggestionButtons.forEach(
+        function (button) {
+
+            button.onclick =
+                function () {
+
+                    const suggestion =
+                        button.textContent
+                            .replace(
+                                /[^\w\s]/gi,
+                                ""
+                            )
+                            .trim();
+
+
+                    foodInput.value =
+                        "I feel like eating " +
+                        suggestion.toLowerCase();
+
+                };
+
+        }
     );
 
 
-    /* SHOW FAKE LOADING */
-
-    foodLoading.classList.add(
-        "active"
-    );
+    /* =========================
+       FAKE AI RESPONSE
+    ========================= */
 
 
-    findFoodButton.disabled =
-        true;
-
-
-    findFoodButton.textContent =
-        "Ming AI is thinking...";
-
-
-    /* FAKE AI THINKING TIME */
-
-    setTimeout(
+    findFoodButton.onclick =
         function () {
 
 
-            foodLoading.classList.remove(
+            const userInput =
+                foodInput.value.trim();
+
+
+            if (
+                userInput === ""
+            ) {
+
+                foodInput.focus();
+
+                return;
+
+            }
+
+
+            foodResult.classList.remove(
                 "active"
             );
 
 
-            foodResult.classList.add(
+            foodLoading.classList.add(
                 "active"
             );
-
-
-            resultTitle.textContent =
-                "Spicy Tonkotsu Ramen";
-
-
-            resultDescription.textContent =
-                "A rich, warming bowl of ramen with a spicy kick. Perfect for when you want something comforting, flavourful and satisfying.";
 
 
             findFoodButton.disabled =
-                false;
+                true;
 
 
             findFoodButton.textContent =
-                "Ask Ming AI ✨";
+                "Ming AI is thinking...";
 
 
-        },
-        1800
-    );
+            setTimeout(
+                function () {
+
+
+                    foodLoading.classList.remove(
+                        "active"
+                    );
+
+
+                    foodResult.classList.add(
+                        "active"
+                    );
+
+
+                    resultTitle.textContent =
+                        "Spicy Tonkotsu Ramen";
+
+
+                    resultDescription.textContent =
+                        "A rich, warming bowl of ramen with a spicy kick. Perfect for when you want something comforting, flavourful and satisfying.";
+
+
+                    findFoodButton.disabled =
+                        false;
+
+
+                    findFoodButton.textContent =
+                        "Ask Ming AI ✨";
+
+
+                },
+                1800
+            );
+
+        };
 
 }
 ```
